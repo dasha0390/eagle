@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kelola Informasi - Eagle School</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #4a5568;
+        }
+
+        .nav {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #4a5568;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #667eea;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #4a5568;
+            cursor: pointer;
+            padding: 8px 15px;
+            border-radius: 20px;
+            transition: background 0.3s ease;
+        }
+
+        .user-menu:hover {
+            background: #f7fafc;
+        }
+
+        .main-content {
+            padding: 40px 0;
+        }
+
+        .page-title {
+            color: white;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 40px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .form-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .form-title {
+            font-size: 1.8rem;
+            color: #4a5568;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #4a5568;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+            outline: none;
+        }
+
+        .form-input:focus {
+            border-color: #667eea;
+        }
+
+        .form-textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 16px;
+            resize: vertical;
+            min-height: 120px;
+            transition: border-color 0.3s ease;
+            outline: none;
+        }
+
+        .form-textarea:focus {
+            border-color: #667eea;
+        }
+
+        .file-input-container {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .file-input-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 12px 15px;
+            border: 2px dashed #e2e8f0;
+            border-radius: 10px;
+            background: #f7fafc;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #718096;
+        }
+
+        .file-input-label:hover {
+            border-color: #667eea;
+            background: #edf2f7;
+        }
+
+        .preview-container {
+            margin-top: 15px;
+            display: none;
+        }
+
+        .preview-image {
+            max-width: 300px;
+            max-height: 200px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #4a5568;
+        }
+
+        .btn-secondary:hover {
+            background: #cbd5e0;
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #f56565, #e53e3e);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(245, 101, 101, 0.3);
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .news-list {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .news-list-title {
+            font-size: 1.8rem;
+            color: #4a5568;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .news-item {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .news-item-image {
+            width: 120px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 10px;
+            flex-shrink: 0;
+        }
+
+        .news-item-content {
+            flex: 1;
+        }
+
+        .news-item-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+
+        .news-item-text {
+            color: #718096;
+            margin-bottom: 8px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .news-item-date {
+            color: #a0aec0;
+            font-size: 0.9rem;
+        }
+
+        .news-item-actions {
+            display: flex;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+
+        .btn-small {
+            padding: 8px 15px;
+            font-size: 14px;
+        }
+
+        .empty-state {
+            text-align: center;
+            color: #a0aec0;
+            font-style: italic;
+            padding: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .form-container, .news-list {
+                padding: 20px;
+                margin: 0 10px;
+            }
+
+            .news-item {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .news-item-image {
+                width: 100%;
+                height: 150px;
+            }
+
+            .form-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <img src="Picture/eagle.png" alt="Logo Graduation Cap" style="width: 40px; height: auto;">
+                <span>Eagle School</span>
+            </div>
+            <nav class="nav">
+                <a href="index.html" class="nav-link">Beranda</a>
+                <a href="#" class="nav-link">Aplikasi</a>
+                <a href="informasi.html" class="nav-link">Kelola Informasi</a>
+                <a href="#" class="nav-link">Bantuan</a>
+            </nav>
+            <div class="user-menu">
+                <i class="fas fa-user"></i>
+                <span>ADMIN</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <h1 class="page-title">
+                <i class="fas fa-newspaper"></i>
+                Kelola Informasi Sekolah
+            </h1>
+
+            <div class="form-container">
+                <h2 class="form-title" id="formTitle">Tambah Informasi Baru</h2>
+                <form id="newsForm">
+                    <input type="hidden" id="editId" value="">
+                    
+                    <div class="form-group">
+                        <label for="newsTitle" class="form-label">
+                            <i class="fas fa-heading"></i>
+                            Judul Informasi
+                        </label>
+                        <input type="text" id="newsTitle" class="form-input" placeholder="Masukkan judul informasi..." required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="newsContent" class="form-label">
+                            <i class="fas fa-align-left"></i>
+                            Isi Informasi
+                        </label>
+                        <textarea id="newsContent" class="form-textarea" placeholder="Masukkan isi informasi..." required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="newsImage" class="form-label">
+                            <i class="fas fa-image"></i>
+                            Gambar
+                        </label>
+                        <div class="file-input-container">
+                            <input type="file" id="newsImage" class="file-input" accept="image/*">
+                            <label for="newsImage" class="file-input-label">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                Pilih atau seret gambar ke sini
+                            </label>
+                        </div>
+                        <div class="preview-container" id="previewContainer">
+                            <img id="previewImage" alt="Preview" class="preview-image">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="newsDate" class="form-label">
+                            <i class="fas fa-calendar"></i>
+                            Tanggal
+                        </label>
+                        <input type="date" id="newsDate" class="form-input" required>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i>
+                            <span id="submitText">Simpan Informasi</span>
+                        </button>
+                        <button type="button" class="btn btn-secondary" onclick="resetForm()">
+                            <i class="fas fa-times"></i>
+                            Batal
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="news-list">
+                <h2 class="news-list-title">Daftar Informasi</h2>
+                <div id="newsList"></div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        let newsData = [];
+
+        // Create colored placeholder image
+        function createColoredPlaceholder(text, color) {
+            const svg = `<svg width="120" height="80" xmlns="http://www.w3.org/2000/svg"><rect width="120" height="80" fill="${color}"/><text x="60" y="40" font-family="Arial, sans-serif" font-size="12" fill="white" text-anchor="middle" dy="0.3em">${text}</text></svg>`;
+            return 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svg)));
+        }
+
+        // Get placeholder image
+        function getPlaceholderImage() {
+            const svg = `<svg width="120" height="80" xmlns="http://www.w3.org/2000/svg"><rect width="120" height="80" fill="#e2e8f0"/><text x="60" y="40" font-family="Arial, sans-serif" font-size="12" fill="#718096" text-anchor="middle" dy="0.3em">No Image</text></svg>`;
+            return 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svg)));
+        }
+
+        // Load news from localStorage
+        function loadNews() {
+            try {
+                const savedNews = localStorage.getItem('schoolNews');
+                console.log('Loading news from localStorage (informasi):', savedNews);
+                
+                if (savedNews && savedNews !== 'null') {
+                    newsData = JSON.parse(savedNews);
+                } else {
+                    // Initialize with default data if empty
+                    newsData = [
+                        {
+                            id: 1,
+                            title: "Selamat Datang di Tahun Ajaran Baru 2024/2025",
+                            content: "Eagle School menyambut seluruh siswa dan guru untuk memulai tahun ajaran baru dengan semangat dan dedikasi tinggi.",
+                            image: createColoredPlaceholder("Tahun Ajaran", "#667eea"),
+                            date: "2024-08-01"
+                        },
+                        {
+                            id: 2,
+                            title: "Pembukaan Pendaftaran Ekstrakurikuler",
+                            content: "Berbagai pilihan ekstrakurikuler telah dibuka untuk mengembangkan bakat dan minat siswa di berbagai bidang.",
+                            image: createColoredPlaceholder("Ekstrakurikuler", "#48bb78"),
+                            date: "2024-07-28"
+                        },
+                        {
+                            id: 3,
+                            title: "Workshop Digital Learning untuk Guru",
+                            content: "Pelatihan teknologi pembelajaran digital untuk meningkatkan kualitas pembelajaran di era modern.",
+                            image: createColoredPlaceholder("Workshop", "#ed8936"),
+                            date: "2024-07-25"
+                        }
+                    ];
+                    saveNews();
+                }
+                
+                // Ensure newsData is array
+                if (!Array.isArray(newsData)) {
+                    newsData = [];
+                }
+            } catch (error) {
+                console.error('Error loading news:', error);
+                newsData = [];
+            }
+        }
+
+        // Save news to localStorage and notify other tabs
+        function saveNews() {
+            try {
+                const newsJson = JSON.stringify(newsData);
+                localStorage.setItem('schoolNews', newsJson);
+                console.log('Saved news to localStorage:', newsJson);
+                
+                // Trigger storage event for other tabs/windows
+                window.dispatchEvent(new StorageEvent('storage', {
+                    key: 'schoolNews',
+                    newValue: newsJson,
+                    oldValue: localStorage.getItem('schoolNews'),
+                    storageArea: localStorage
+                }));
+                
+                // Trigger custom event for same-tab communication
+                window.dispatchEvent(new CustomEvent('newsUpdated', {
+                    detail: { newsData: newsData }
+                }));
+                
+                return true;
+            } catch (error) {
+                console.error('Error saving news:', error);
+                showNotification('Gagal menyimpan data!', 'error');
+                return false;
+            }
+        }
+
+        // Handle image preview
+        function handleImagePreview(event) {
+            const file = event.target.files[0];
+            const previewContainer = document.getElementById('previewContainer');
+            const previewImage = document.getElementById('previewImage');
+
+            if (file) {
+                // Validate file size (max 5MB)
+                if (file.size > 5 * 1024 * 1024) {
+                    showNotification('Ukuran file terlalu besar! Maksimal 5MB.', 'error');
+                    event.target.value = '';
+                    previewContainer.style.display = 'none';
+                    return;
+                }
+
+                // Validate file type
+                if (!file.type.startsWith('image/')) {
+                    showNotification('File harus berupa gambar!', 'error');
+                    event.target.value = '';
+                    previewContainer.style.display = 'none';
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewImage.src = e.target.result;
+                    previewContainer.style.display = 'block';
+                };
+                reader.onerror = function() {
+                    showNotification('Gagal membaca file gambar!', 'error');
+                    previewContainer.style.display = 'none';
+                };
+                reader.readAsDataURL(file);
+            } else {
+                previewContainer.style.display = 'none';
+            }
+        }
+
+        // Handle form submission
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            
+            const title = document.getElementById('newsTitle').value.trim();
+            const content = document.getElementById('newsContent').value.trim();
+            const date = document.getElementById('newsDate').value;
+            const imageFile = document.getElementById('newsImage').files[0];
+            const editId = document.getElementById('editId').value;
+
+            // Validation
+            if (!title || !content || !date) {
+                showNotification('Harap lengkapi semua field yang wajib diisi!', 'error');
+                return;
+            }
+
+            if (title.length > 200) {
+                showNotification('Judul terlalu panjang! Maksimal 200 karakter.', 'error');
+                return;
+            }
+
+            if (content.length > 1000) {
+                showNotification('Konten terlalu panjang! Maksimal 1000 karakter.', 'error');
+                return;
+            }
+
+            // Function to save news data
+            function saveNewsData(newsItem, isEdit = false) {
+                if (isEdit) {
+                    const index = newsData.findIndex(news => news.id == editId);
+                    if (index !== -1) {
+                        newsData[index] = { ...newsData[index], ...newsItem };
+                        if (saveNews()) {
+                            displayNewsList();
+                            resetForm();
+                            showNotification('Informasi berhasil diupdate!', 'success');
+                        }
+                    }
+                } else {
+                    newsData.unshift(newsItem);
+                    if (saveNews()) {
+                        displayNewsList();
+                        resetForm();
+                        showNotification('Informasi berhasil ditambahkan!', 'success');
+                    }
+                }
+            }
+
+            // Handle edit vs new submission
+            if (editId) {
+                // Edit existing news
+                const updateData = {
+                    title: title,
+                    content: content,
+                    date: date
+                };
+
+                if (imageFile) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        updateData.image = e.target.result;
+                        saveNewsData(updateData, true);
+                    };
+                    reader.readAsDataURL(imageFile);
+                } else {
+                    saveNewsData(updateData, true);
+                }
+            } else {
+                // Add new news
+                const newId = newsData.length > 0 ? Math.max(...newsData.map(n => n.id)) + 1 : 1;
+                const newNews = {
+                    id: newId,
+                    title: title,
+                    content: content,
+                    date: date,
+                    image: null
+                };
+
+                if (imageFile) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        newNews.image = e.target.result;
+                        saveNewsData(newNews, false);
+                    };
+                    reader.readAsDataURL(imageFile);
+                } else {
+                    // Use colored placeholder for new news without image
+                    newNews.image = createColoredPlaceholder(title.substring(0, 10), "#667eea");
+                    saveNewsData(newNews, false);
+                }
+            }
+        }
+
+        // Display news list
+        function displayNewsList() {
+            const newsList = document.getElementById('newsList');
+            
+            if (!newsData || newsData.length === 0) {
+                newsList.innerHTML = '<div class="empty-state">Belum ada informasi yang tersedia</div>';
+                return;
+            }
+
+            // Sort by date (newest first)
+            const sortedNews = [...newsData].sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            newsList.innerHTML = '';
+            sortedNews.forEach(news => {
+                const newsItem = document.createElement('div');
+                newsItem.className = 'news-item';
+                
+                const placeholderImg = getPlaceholderImage();
+                let imageSrc = news.image;
+                if (!imageSrc || imageSrc === 'null') {
+                    imageSrc = createColoredPlaceholder(news.title.substring(0, 10), "#667eea");
+                }
+                
+                newsItem.innerHTML = `
+                    <img src="${imageSrc}" alt="${escapeHtml(news.title)}" class="news-item-image" onerror="this.src='${placeholderImg}'">
+                    <div class="news-item-content">
+                        <h3 class="news-item-title">${escapeHtml(news.title)}</h3>
+                        <p class="news-item-text">${escapeHtml(news.content)}</p>
+                        <div class="news-item-date">
+                            <i class="fas fa-calendar"></i>
+                            ${formatDate(news.date)}
+                        </div>
+                    </div>
+                    <div class="news-item-actions">
+                        <button class="btn btn-secondary btn-small" onclick="editNews(${news.id})">
+                            <i class="fas fa-edit"></i>
+                            Edit
+                        </button>
+                        <button class="btn btn-danger btn-small" onclick="deleteNews(${news.id})">
+                            <i class="fas fa-trash"></i>
+                            Hapus
+                        </button>
+                    </div>
+                `;
+                newsList.appendChild(newsItem);
+            });
+        }
+
+        // Escape HTML to prevent XSS
+        function escapeHtml(text) {
+            if (!text) return '';
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+        }
+
+        // Format date to Indonesian format
+        function formatDate(dateString) {
+            try {
+                const date = new Date(dateString);
+                if (isNaN(date.getTime())) {
+                    return dateString;
+                }
+                return date.toLocaleDateString('id-ID', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+            } catch (error) {
+                return dateString;
+            }
+        }
+
+        // Edit news function
+        function editNews(id) {
+            const news = newsData.find(n => n.id === id);
+            if (!news) return;
+
+            document.getElementById('editId').value = news.id;
+            document.getElementById('newsTitle').value = news.title || '';
+            document.getElementById('newsContent').value = news.content || '';
+            document.getElementById('newsDate').value = news.date || '';
+            
+            document.getElementById('formTitle').textContent = 'Edit Informasi';
+            document.getElementById('submitText').textContent = 'Update Informasi';
+            
+            // Show image preview if exists
+            if (news.image && news.image !== 'null') {
+                const previewContainer = document.getElementById('previewContainer');
+                const previewImage = document.getElementById('previewImage');
+                previewImage.src = news.image;
+                previewContainer.style.display = 'block';
+            }
+            
+            // Scroll to form
+            document.querySelector('.form-container').scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+
+        // Delete news function
+        function deleteNews(id) {
+            if (!confirm('Apakah Anda yakin ingin menghapus informasi ini?')) {
+                return;
+            }
+
+            const initialLength = newsData.length;
+            newsData = newsData.filter(news => news.id !== id);
+            
+            if (newsData.length < initialLength) {
+                if (saveNews()) {
+                    displayNewsList();
+                    showNotification('Informasi berhasil dihapus!', 'success');
+                }
+            } else {
+                showNotification('Gagal menghapus informasi!', 'error');
+            }
+        }
+
+        // Reset form function
+        function resetForm() {
+            document.getElementById('newsForm').reset();
+            document.getElementById('editId').value = '';
+            document.getElementById('formTitle').textContent = 'Tambah Informasi Baru';
+            document.getElementById('submitText').textContent = 'Simpan Informasi';
+            document.getElementById('previewContainer').style.display = 'none';
+            
+            // Set today's date
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('newsDate').value = today;
+        }
+
+        // Show notification function
+        function showNotification(message, type = 'success') {
+            // Remove existing notifications
+            const existingNotifications = document.querySelectorAll('.notification');
+            existingNotifications.forEach(n => n.remove());
+
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i> ${message}`;
+            notification.style.cssText = `
+                position: fixed; 
+                top: 20px; 
+                right: 20px; 
+                background: ${type === 'success' ? '#48bb78' : '#f56565'}; 
+                color: white; 
+                padding: 15px 20px; 
+                border-radius: 10px; 
+                box-shadow: 0 4px 15px rgba(0,0,0,0.2); 
+                z-index: 10000; 
+                display: flex; 
+                align-items: center; 
+                gap: 10px; 
+                font-weight: 500;
+                animation: slideInRight 0.3s ease;
+            `;
+            
+            // Add CSS for animation if not exists
+            if (!document.getElementById('notificationStyles')) {
+                const style = document.createElement('style');
+                style.id = 'notificationStyles';
+                style.textContent = `
+                    @keyframes slideInRight {
+                        from { transform: translateX(100%); opacity: 0; }
+                        to { transform: translateX(0); opacity: 1; }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+            
+            document.body.appendChild(notification);
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.remove();
+                }
+            }, 3000);
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Informasi page loaded, initializing...');
+            loadNews();
+            displayNewsList();
+            
+            // Set today's date as default
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('newsDate').value = today;
+            
+            // Add event listeners
+            document.getElementById('newsImage').addEventListener('change', handleImagePreview);
+            document.getElementById('newsForm').addEventListener('submit', handleFormSubmit);
+        });
+
+    </script>
+</body>
+</html>

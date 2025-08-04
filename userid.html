@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eagle School - Admin Dashboard</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f8f9fa;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logout-btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background: #c0392b;
+            transform: translateY(-2px);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        .main-section {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%);
+            color: white;
+            padding: 25px 30px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-content {
+            padding: 30px;
+        }
+
+        .add-user-form {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 4px solid #3498db;
+        }
+
+        .form-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 0;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 14px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: #3498db;
+            color: white;
+        }
+
+        .btn-success {
+            background: #27ae60;
+            color: white;
+        }
+
+        .btn-warning {
+            background: #f39c12;
+            color: white;
+        }
+
+        .btn-danger {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .users-section {
+            margin-top: 30px;
+        }
+
+        .search-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid #27ae60;
+        }
+
+        .search-container {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .search-input-group {
+            flex: 1;
+            min-width: 250px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 15px 12px 45px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #27ae60;
+            box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #7f8c8d;
+            font-size: 16px;
+        }
+
+        .clear-search-btn {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #7f8c8d;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .clear-search-btn:hover {
+            background: #e9ecef;
+            color: #e74c3c;
+        }
+
+        .search-results-info {
+            margin-top: 10px;
+            font-size: 13px;
+            color: #7f8c8d;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+
+        .users-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .users-table th,
+        .users-table td {
+            padding: 15px 12px;
+            text-align: left;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .users-table th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 14px;
+        }
+
+        .users-table tbody tr:hover {
+            background: #f8f9fa;
+        }
+
+        .role-badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .role-superadmin { background: #e74c3c; color: white; }
+        .role-admin { background: #f39c12; color: white; }
+        .role-guru { background: #27ae60; color: white; }
+        .role-siswa { background: #3498db; color: white; }
+
+        .action-buttons {
+            display: flex;
+            gap: 5px;
+        }
+
+        .btn-small {
+            padding: 6px 10px;
+            font-size: 11px;
+            min-width: auto;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #ffffff;
+            border-top: 2px solid transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 8px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .stats-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            border-top: 3px solid #3498db;
+        }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #7f8c8d;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: #7f8c8d;
+        }
+
+        .no-results i {
+            font-size: 48px;
+            margin-bottom: 15px;
+            opacity: 0.5;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .users-table {
+                font-size: 12px;
+            }
+
+            .users-table th,
+            .users-table td {
+                padding: 8px 6px;
+            }
+
+            .search-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-input-group {
+                min-width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <img src="Picture/eagle.png" alt="Logo Graduation Cap" style="width: 40px; height: auto;">
+                <div>
+                    <h1>Eagle School</h1>
+                    <p>Admin Dashboard</p>
+                </div>
+            </div>
+            <div class="user-info">
+                <div>
+                    <div id="currentUserName">Administrator</div>
+                    <small id="currentUserRole">Admin</small>
+                </div>
+                <button class="logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Statistics Cards -->
+        <div class="stats-cards">
+            <div class="stat-card">
+                <div class="stat-number" id="totalUsers">-</div>
+                <div class="stat-label">Total User</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalSiswa">-</div>
+                <div class="stat-label">Siswa</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalGuru">-</div>
+                <div class="stat-label">Guru</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalAdmin">-</div>
+                <div class="stat-label">Admin</div>
+            </div>
+        </div>
+
+        <!-- Main Section -->
+        <div class="main-section">
+            <div class="section-header">
+                <div class="section-title">
+                    <i class="fas fa-users-cog"></i>
+                    Manajemen User
+                </div>
+            </div>
+            
+            <div class="section-content">
+                <div id="mainAlert"></div>
+                
+                <!-- Add User Form -->
+                <div class="add-user-form">
+                    <div class="form-title">
+                        <i class="fas fa-user-plus"></i>
+                        Tambah User Baru
+                    </div>
+                    
+                    <form id="addUserForm">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="newUsername">Username</label>
+                                <input type="text" id="newUsername" required placeholder="Username">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="newPassword">Password</label>
+                                <input type="password" id="newPassword" required placeholder="Password">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="newName">Nama Lengkap</label>
+                                <input type="text" id="newName" required placeholder="Nama Lengkap">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="newRole">Role</label>
+                                <select id="newRole" required>
+                                    <option value="">Pilih Role</option>
+                                    <option value="siswa">Siswa</option>
+                                    <option value="guru">Guru</option>
+                                    <option value="admin">Admin</option>
+                                    <option value="superadmin">Super Admin</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-success" id="addUserBtn">
+                            <i class="fas fa-plus"></i>
+                            <span id="addUserBtnText">Tambah User</span>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Users List -->
+                <div class="users-section">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <h3 style="color: #2c3e50; margin: 0;">
+                            <i class="fas fa-list"></i> Daftar User
+                        </h3>
+                        <button class="btn btn-primary" onclick="loadUsers()">
+                            <i class="fas fa-sync-alt"></i> Refresh
+                        </button>
+                    </div>
+
+                    <!-- Search Section -->
+                    <div class="search-section">
+                        <div class="search-container">
+                            <div class="search-input-group">
+                                <i class="fas fa-search search-icon"></i>
+                                <input 
+                                    type="text" 
+                                    id="searchInput" 
+                                    class="search-input" 
+                                    placeholder="Cari berdasarkan nama, username, atau role..."
+                                    autocomplete="off"
+                                >
+                                <button type="button" class="clear-search-btn" id="clearSearchBtn" onclick="clearSearch()" style="display: none;">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="search-results-info" id="searchResultsInfo" style="display: none;">
+                            <i class="fas fa-info-circle"></i>
+                            <span id="searchResultsText">Menampilkan semua user</span>
+                        </div>
+                    </div>
+                    
+                    <div style="overflow-x: auto;">
+                        <table class="users-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Username</th>
+                                    <th>Password</th>
+                                    <th>Role</th>
+                                    <th>Nama</th>
+                                    <th>Created</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="usersTableBody">
+                                <tr>
+                                    <td colspan="7" style="text-align: center; padding: 40px; color: #7f8c8d;">
+                                        <i class="fas fa-spinner fa-spin"></i> Memuat data user...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // KONFIGURASI - Google Apps Script URL
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzIuhHozhAWHKEWqrvbTTGDPa513V-WAYdoucTYiRzl07Sdk26YV-D-r09CEvC7wLmz/exec';
+        
+        let currentUser = null;
+        let allUsers = [];
+        let filteredUsers = [];
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Cek session
+            const savedUser = sessionStorage.getItem('currentUser');
+            if (!savedUser) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            try {
+                currentUser = JSON.parse(savedUser);
+                
+                // Cek apakah user adalah admin atau superadmin
+                if (!['admin', 'superadmin'].includes(currentUser.role)) {
+                    alert('Anda tidak memiliki akses ke halaman ini!');
+                    window.location.href = 'login.html';
+                    return;
+                }
+                
+                // Update UI dengan info user
+                document.getElementById('currentUserName').textContent = currentUser.name || currentUser.username;
+                document.getElementById('currentUserRole').textContent = currentUser.role.charAt(0).toUpperCase() + currentUser.role.slice(1);
+                
+                // Setup search functionality
+                setupSearch();
+                
+                // Load data
+                loadUsers();
+                
+            } catch (error) {
+                console.error('Error parsing user session:', error);
+                window.location.href = 'login.html';
+            }
+        });
+
+        // Setup search functionality
+        function setupSearch() {
+            const searchInput = document.getElementById('searchInput');
+            const clearSearchBtn = document.getElementById('clearSearchBtn');
+            
+            // Real-time search
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.trim();
+                
+                if (searchTerm.length > 0) {
+                    clearSearchBtn.style.display = 'block';
+                    performSearch(searchTerm);
+                } else {
+                    clearSearchBtn.style.display = 'none';
+                    showAllUsers();
+                }
+            });
+
+            // Enter key search
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    const searchTerm = this.value.trim();
+                    if (searchTerm.length > 0) {
+                        performSearch(searchTerm);
+                    }
+                }
+            });
+        }
+
+        // Perform search
+        function performSearch(searchTerm) {
+            if (allUsers.length === 0) return;
+            
+            const searchTermLower = searchTerm.toLowerCase();
+            
+            filteredUsers = allUsers.filter(user => {
+                return (
+                    user.name.toLowerCase().includes(searchTermLower) ||
+                    user.username.toLowerCase().includes(searchTermLower) ||
+                    user.role.toLowerCase().includes(searchTermLower)
+                );
+            });
+            
+            displayUsers(filteredUsers, searchTerm);
+            updateSearchResultsInfo(filteredUsers.length, allUsers.length, searchTerm);
+        }
+
+        // Show all users (clear search)
+        function showAllUsers() {
+            filteredUsers = [...allUsers];
+            displayUsers(filteredUsers);
+            hideSearchResultsInfo();
+        }
+
+        // Clear search
+        function clearSearch() {
+            const searchInput = document.getElementById('searchInput');
+            const clearSearchBtn = document.getElementById('clearSearchBtn');
+            
+            searchInput.value = '';
+            clearSearchBtn.style.display = 'none';
+            showAllUsers();
+            searchInput.focus();
+        }
+
+        // Update search results info
+        function updateSearchResultsInfo(filteredCount, totalCount, searchTerm) {
+            const searchResultsInfo = document.getElementById('searchResultsInfo');
+            const searchResultsText = document.getElementById('searchResultsText');
+            
+            if (filteredCount === totalCount) {
+                searchResultsText.textContent = `Menampilkan semua ${totalCount} user`;
+            } else if (filteredCount === 0) {
+                searchResultsText.innerHTML = `Tidak ditemukan user dengan kata kunci "<span class="highlight">${searchTerm}</span>"`;
+            } else {
+                searchResultsText.innerHTML = `Ditemukan ${filteredCount} dari ${totalCount} user dengan kata kunci "<span class="highlight">${searchTerm}</span>"`;
+            }
+            
+            searchResultsInfo.style.display = 'flex';
+        }
+
+        // Hide search results info
+        function hideSearchResultsInfo() {
+            const searchResultsInfo = document.getElementById('searchResultsInfo');
+            searchResultsInfo.style.display = 'none';
+        }
+
+        // Highlight search terms in text
+        function highlightSearchTerm(text, searchTerm) {
+            if (!searchTerm || searchTerm.length === 0) return text;
+            
+            const regex = new RegExp(`(${searchTerm})`, 'gi');
+            return text.replace(regex, '<span class="highlight">$1</span>');
+        }
+
+        // Load users from Google Apps Script
+        async function loadUsers() {
+            const tableBody = document.getElementById('usersTableBody');
+            tableBody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 40px; color: #7f8c8d;"><i class="fas fa-spinner fa-spin"></i> Memuat data user...</td></tr>';
+            
+            try {
+                const formData = new FormData();
+                formData.append('action', 'getUsers');
+                formData.append('current_user_role', currentUser.role);
+                
+                const response = await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    allUsers = result.users || [];
+                    filteredUsers = [...allUsers];
+                    displayUsers(filteredUsers);
+                    updateStats(allUsers);
+                    hideSearchResultsInfo();
+                } else {
+                    throw new Error(result.message || 'Gagal memuat data user');
+                }
+                
+            } catch (error) {
+                console.error('Error loading users:', error);
+                showAlert('Gagal memuat data user: ' + error.message, 'error');
+                tableBody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 40px; color: #e74c3c;">Gagal memuat data: ' + error.message + '</td></tr>';
+            }
+        }
+
+        function displayUsers(users, searchTerm = '') {
+            const tableBody = document.getElementById('usersTableBody');
+            
+            if (users.length === 0) {
+                const isSearching = searchTerm.length > 0;
+                const emptyMessage = isSearching 
+                    ? `<div class="no-results">
+                        <i class="fas fa-search"></i>
+                        <div>Tidak ditemukan user dengan kata kunci "<strong>${searchTerm}</strong>"</div>
+                        <small style="margin-top: 10px; color: #95a5a6;">Coba gunakan kata kunci yang berbeda</small>
+                       </div>`
+                    : `<div class="no-results">
+                        <i class="fas fa-users"></i>
+                        <div>Belum ada data user</div>
+                       </div>`;
+                
+                tableBody.innerHTML = `<tr><td colspan="7" style="padding: 0;">${emptyMessage}</td></tr>`;
+                return;
+            }
+            
+            const tableHtml = users.map(user => {
+                // Highlight search terms if searching
+                const highlightedName = searchTerm ? highlightSearchTerm(user.name, searchTerm) : user.name;
+                const highlightedUsername = searchTerm ? highlightSearchTerm(user.username, searchTerm) : user.username;
+                const highlightedRole = searchTerm ? highlightSearchTerm(user.role, searchTerm) : user.role;
+                
+                return `
+                    <tr>
+                        <td><strong>${user.id}</strong></td>
+                        <td><strong>${highlightedUsername}</strong></td>
+                        <td><span style="font-family: monospace;">${user.password || '****'}</span></td>
+                        <td><span class="role-badge role-${user.role}">${highlightedRole}</span></td>
+                        <td>${highlightedName}</td>
+                        <td>${formatDate(user.created)}</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-warning btn-small" onclick="editUser(${user.id})">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                ${user.username !== currentUser.username ? `
+                                    <button class="btn btn-danger btn-small" onclick="deleteUser(${user.id}, '${user.username}')">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                ` : ''}
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+            
+            tableBody.innerHTML = tableHtml;
+        }
+
+        function formatDate(dateString) {
+            if (!dateString) return '-';
+            try {
+                const date = new Date(dateString);
+                return date.toLocaleDateString('id-ID');
+            } catch (e) {
+                return dateString;
+            }
+        }
+
+        function updateStats(users) {
+            const totalUsers = users.length;
+            const totalSiswa = users.filter(u => u.role === 'siswa').length;
+            const totalGuru = users.filter(u => u.role === 'guru').length;
+            const totalAdmin = users.filter(u => ['admin', 'superadmin'].includes(u.role)).length;
+            
+            document.getElementById('totalUsers').textContent = totalUsers;
+            document.getElementById('totalSiswa').textContent = totalSiswa;
+            document.getElementById('totalGuru').textContent = totalGuru;
+            document.getElementById('totalAdmin').textContent = totalAdmin;
+        }
+
+        // Add new user
+        document.getElementById('addUserForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('newUsername').value;
+            const password = document.getElementById('newPassword').value;
+            const name = document.getElementById('newName').value;
+            const role = document.getElementById('newRole').value;
+            const btn = document.getElementById('addUserBtn');
+            const btnText = document.getElementById('addUserBtnText');
+            
+            // Validation
+            if (!username || !password || !name || !role) {
+                showAlert('Semua field harus diisi!', 'error');
+                return;
+            }
+            
+            // Set loading state
+            btn.disabled = true;
+            btnText.innerHTML = '<span class="loading"></span>Menambahkan...';
+            
+            try {
+                const formData = new FormData();
+                formData.append('action', 'addUser');
+                formData.append('username', username);
+                formData.append('password', password);
+                formData.append('name', name);
+                formData.append('role', role);
+                formData.append('current_user_role', currentUser.role);
+                
+                const response = await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showAlert('User berhasil ditambahkan!', 'success');
+                    document.getElementById('addUserForm').reset();
+                    loadUsers(); // Reload data
+                } else {
+                    throw new Error(result.message || 'Gagal menambahkan user');
+                }
+                
+            } catch (error) {
+                console.error('Error adding user:', error);
+                showAlert('Terjadi kesalahan saat menambahkan user: ' + error.message, 'error');
+            } finally {
+                btn.disabled = false;
+                btnText.textContent = 'Tambah User';
+            }
+        });
+
+        // Edit user (simple prompt-based editing)
+        function editUser(userId) {
+            const user = allUsers.find(u => u.id === userId);
+            if (!user) return;
+            
+            const newName = prompt(`Edit nama untuk ${user.username}:`, user.name);
+            if (newName && newName !== user.name) {
+                // Untuk saat ini hanya simulasi, Anda perlu menambahkan fungsi updateUser di Apps Script
+                user.name = newName;
+                displayUsers(filteredUsers);
+                showAlert('Fitur edit akan segera tersedia!', 'error');
+            }
+        }
+
+        // Delete user
+        async function deleteUser(userId, username) {
+            if (username === currentUser.username) {
+                alert('Anda tidak dapat menghapus akun sendiri!');
+                return;
+            }
+            
+            if (!confirm(`Apakah Anda yakin ingin menghapus user "${username}"?`)) {
+                return;
+            }
+            
+            try {
+                const formData = new FormData();
+                formData.append('action', 'deleteUser');
+                formData.append('userId', userId);
+                formData.append('current_user_role', currentUser.role);
+                
+                const response = await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showAlert('User berhasil dihapus!', 'success');
+                    loadUsers(); // Reload data
+                } else {
+                    throw new Error(result.message || 'Gagal menghapus user');
+                }
+                
+            } catch (error) {
+                console.error('Error deleting user:', error);
+                showAlert('Terjadi kesalahan saat menghapus user: ' + error.message, 'error');
+            }
+        }
+
+        // Utility functions
+        function showAlert(message, type = 'error') {
+            const container = document.getElementById('mainAlert');
+            const alertClass = type === 'error' ? 'alert-error' : 'alert-success';
+            const icon = type === 'error' ? 'fa-exclamation-circle' : 'fa-check-circle';
+            
+            container.innerHTML = `
+                <div class="alert ${alertClass}">
+                    <i class="fas ${icon}"></i>
+                    ${message}
+                </div>
+            `;
+            
+            setTimeout(() => {
+                container.innerHTML = '';
+            }, 5000);
+        }
+
+        function logout() {
+            if (confirm('Apakah Anda yakin ingin logout?')) {
+                sessionStorage.removeItem('currentUser');
+                window.location.href = 'login.html';
+            }
+        }
+    </script>
+</body>
+</html>

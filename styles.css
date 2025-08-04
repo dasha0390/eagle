@@ -1,0 +1,417 @@
+/* Reset dan Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    color: #333;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Header Styles */
+.header {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #4a5568;
+}
+
+.logo i {
+    color: #667eea;
+    font-size: 1.8rem;
+}
+
+.nav {
+    display: flex;
+    gap: 30px;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: #4a5568;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #667eea;
+}
+
+.user-menu {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #4a5568;
+    cursor: pointer;
+    padding: 8px 15px;
+    border-radius: 20px;
+    transition: background 0.3s ease;
+}
+
+.user-menu:hover {
+    background: #f7fafc;
+}
+
+/* Main Content */
+.main-content {
+    padding: 40px 0;
+}
+
+/* Search Container */
+.search-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+
+.search-input {
+    width: 500px;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 25px 0 0 25px;
+    background: rgba(255, 255, 255, 0.95);
+    font-size: 16px;
+    outline: none;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.search-btn {
+    padding: 15px 20px;
+    border: none;
+    background: #667eea;
+    color: white;
+    border-radius: 0 25px 25px 0;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.search-btn:hover {
+    background: #5a67d8;
+}
+
+/* Section Styles */
+.section {
+    margin-bottom: 50px;
+}
+
+.section-title {
+    font-size: 2rem;
+    margin-bottom: 30px;
+    color: white;
+    text-align: left;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* App Grid */
+.app-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+}
+
+/* App Card */
+.app-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    padding: 25px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+}
+
+.app-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+}
+
+/* App Icon */
+.app-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: white;
+    flex-shrink: 0;
+}
+
+/* Icon Colors */
+.siakad { background: linear-gradient(135deg, #4299e1, #3182ce); }
+.elearning { background: linear-gradient(135deg, #48bb78, #38a169); }
+.library { background: linear-gradient(135deg, #ed8936, #dd6b20); }
+.exam { background: linear-gradient(135deg, #9f7aea, #805ad5); }
+.attendance { background: linear-gradient(135deg, #38b2ac, #319795); }
+.grades { background: linear-gradient(135deg, #f56565, #e53e3e); }
+.finance { background: linear-gradient(135deg, #fbb6ce, #ed64a6); }
+.report { background: linear-gradient(135deg, #90cdf4, #63b3ed); }
+.schedule { background: linear-gradient(135deg, #68d391, #48bb78); }
+.ppdb { background: linear-gradient(135deg, #fbd38d, #f6ad55); }
+.inventory { background: linear-gradient(135deg, #a78bfa, #8b5cf6); }
+.hr { background: linear-gradient(135deg, #fc8181, #f56565); }
+
+/* App Info */
+.app-info {
+    flex: 1;
+}
+
+.app-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 5px;
+}
+
+.app-description {
+    color: #718096;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+/* Footer */
+.footer {
+    background: rgba(255, 255, 255, 0.1);
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 50px;
+    color: white;
+    backdrop-filter: blur(10px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .nav {
+        gap: 20px;
+    }
+    
+    .search-input {
+        width: 100%;
+        max-width: 400px;
+    }
+    
+    .app-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .app-card {
+        padding: 20px;
+    }
+    
+    .section-title {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .app-card {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .app-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+    }
+    
+    .search-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .search-input {
+        border-radius: 25px;
+        margin-bottom: 10px;
+    }
+    
+    .search-btn {
+        border-radius: 25px;
+        width: 100px;
+    }
+}
+
+/* Additional styles for Eagle School Portal */
+
+/* Base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    color: #333;
+}
+
+/* Container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Header styles */
+.header {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #4a5568;
+}
+
+.nav {
+    display: flex;
+    gap: 30px;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: #4a5568;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #667eea;
+}
+
+.user-menu {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #4a5568;
+    cursor: pointer;
+    padding: 8px 15px;
+    border-radius: 20px;
+    transition: background 0.3s ease;
+}
+
+.user-menu:hover {
+    background: #f7fafc;
+}
+
+/* Main content */
+.main-content {
+    padding: 40px 0;
+}
+
+/* Footer */
+.footer {
+    background: rgba(0, 0, 0, 0.1);
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    backdrop-filter: blur(10px);
+}
+
+/* Utility classes */
+.text-center {
+    text-align: center;
+}
+
+.mb-20 {
+    margin-bottom: 20px;
+}
+
+.mb-30 {
+    margin-bottom: 30px;
+}
+
+.mb-40 {
+    margin-bottom: 40px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .nav {
+        gap: 20px;
+    }
+    
+    .container {
+        padding: 0 15px;
+    }
+    
+    .main-content {
+        padding: 20px 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .nav {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+    
+    .logo {
+        font-size: 1.2rem;
+    }
+}

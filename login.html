@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eagle School - Login</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+        }
+
+        .logo-section {
+            margin-bottom: 30px;
+        }
+
+        .logo-section img {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 15px;
+        }
+
+        .logo-section h1 {
+            color: #2c3e50;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .logo-section p {
+            color: #7f8c8d;
+            font-size: 16px;
+        }
+
+        .config-section {
+            background: #ecf0f1;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+        }
+
+        .config-section h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #e74c3c;
+        }
+
+        .status-dot.online {
+            background: #27ae60;
+        }
+
+        .config-info {
+            font-size: 12px;
+            color: #7f8c8d;
+            background: white;
+            padding: 8px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 14px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #bdc3c7;
+            font-size: 16px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 15px 15px 15px 45px;
+            border: 2px solid #ecf0f1;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #3498db;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+
+        select {
+            padding-left: 45px;
+            cursor: pointer;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .login-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(52, 152, 219, 0.2);
+        }
+
+        .login-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .alert {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ffffff;
+            border-top: 2px solid transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .footer-text {
+            margin-top: 30px;
+            color: #95a5a6;
+            font-size: 12px;
+        }
+
+        .default-accounts {
+            background: #e8f5e8;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            text-align: left;
+        }
+
+        .default-accounts h4 {
+            color: #27ae60;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .account-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            border-bottom: 1px solid #d4edda;
+            font-size: 12px;
+        }
+
+        .account-item:last-child {
+            border-bottom: none;
+        }
+
+        .toggle-debug {
+            background: none;
+            border: none;
+            color: #3498db;
+            cursor: pointer;
+            font-size: 12px;
+            text-decoration: underline;
+            margin-top: 10px;
+        }
+
+        .debug-info {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            font-size: 12px;
+            color: #666;
+            text-align: left;
+            max-height: 150px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .login-container {
+                margin: 20px;
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <!-- Logo Section -->
+        <div class="logo-section">
+            <img src="Picture/eagle.png" alt="Logo Graduation Cap" style="width: 40px; height: auto;">
+            <h1>Eagle School</h1>
+            <p>Portal Pendidikan</p>
+        </div>
+
+        <!-- Configuration Section -->
+        <div class="config-section">
+            <h3>Status Database</h3>
+            <div class="status-indicator">
+                <span class="status-dot" id="dbStatus"></span>
+                <span id="dbStatusText">Checking connection...</span>
+            </div>
+            <div class="config-info" id="configInfo">
+                Google Apps Script - Menguji koneksi ke database
+            </div>
+            
+            <!-- Default Accounts Info -->
+            <div class="default-accounts">
+                <h4>🔑 Akun Default untuk Testing:</h4>
+                <div class="account-item">
+                    <span><strong>Super Admin:</strong> superadmin / admin123</span>
+                </div>
+                <div class="account-item">
+                    <span><strong>Admin:</strong> admin / admin123</span>
+                </div>
+                <div class="account-item">
+                    <span><strong>Guru:</strong> guru1 / guru123</span>
+                </div>
+                <div class="account-item">
+                    <span><strong>Siswa:</strong> siswa1 / siswa123</span>
+                </div>
+            </div>
+            
+            <button class="toggle-debug" onclick="toggleDebug()">Show Debug Info</button>
+            <div class="debug-info" id="debugInfo"></div>
+        </div>
+
+        <!-- Login Section -->
+        <div id="loginSection">
+            <div id="loginAlert"></div>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="username" name="username" placeholder="Masukkan username" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="password" name="password" placeholder="Masukkan password" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="role">Role</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-user-tag"></i>
+                        <select id="role" name="role" required>
+                            <option value="">Pilih Role</option>
+                            <option value="siswa">Siswa</option>
+                            <option value="guru">Guru</option>
+                            <option value="admin">Admin</option>
+                            <option value="superadmin">Super Admin</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" class="login-btn" id="loginBtn">
+                    <span id="loginBtnText">Masuk</span>
+                </button>
+            </form>
+
+            <div class="footer-text">
+                &copy; 2024 Eagle School. All rights reserved.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // KONFIGURASI - GANTI DENGAN URL DEPLOYMENT APPS SCRIPT ANDA
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzIuhHozhAWHKEWqrvbTTGDPa513V-WAYdoucTYiRzl07Sdk26YV-D-r09CEvC7wLmz/exec';
+        
+        // Role page mappings - sesuaikan dengan struktur folder Anda
+        const ROLE_PAGES = {
+            'siswa': 'pages/siswa/index.html',
+            'guru': 'pages/guru/index.html', 
+            'admin': 'index.html',
+            'superadmin': 'userid.html'
+        };
+
+        let currentUser = null;
+        let debugLogs = [];
+
+        // Fungsi untuk log debug
+        function debugLog(message) {
+            const timestamp = new Date().toLocaleTimeString();
+            debugLogs.push(`[${timestamp}] ${message}`);
+            updateDebugInfo();
+            console.log(message);
+        }
+
+        // Update debug info display
+        function updateDebugInfo() {
+            const debugInfo = document.getElementById('debugInfo');
+            debugInfo.innerHTML = debugLogs.slice(-10).join('<br>'); // Show last 10 logs
+        }
+
+        // Toggle debug info
+        function toggleDebug() {
+            const debugInfo = document.getElementById('debugInfo');
+            const toggleBtn = document.querySelector('.toggle-debug');
+            
+            if (debugInfo.style.display === 'none') {
+                debugInfo.style.display = 'block';
+                toggleBtn.textContent = 'Hide Debug Info';
+            } else {
+                debugInfo.style.display = 'none';
+                toggleBtn.textContent = 'Show Debug Info';
+            }
+        }
+
+        // Fungsi untuk cek koneksi database
+        async function checkDatabaseConnection() {
+            const statusDot = document.getElementById('dbStatus');
+            const statusText = document.getElementById('dbStatusText');
+            const configInfo = document.getElementById('configInfo');
+            
+            debugLog('Checking database connection...');
+            
+            try {
+                const response = await fetch(GOOGLE_SCRIPT_URL + '?action=test', {
+                    method: 'GET',
+                });
+                
+                debugLog(`Response status: ${response.status}`);
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    debugLog(`Response data: ${JSON.stringify(data)}`);
+                    
+                    statusDot.classList.add('online');
+                    statusText.textContent = 'Database Connected';
+                    configInfo.textContent = `Connected to Google Sheets - ${data.message || 'Ready'}`;
+                } else {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+            } catch (error) {
+                debugLog(`Database connection error: ${error.message}`);
+                statusDot.classList.remove('online');
+                statusText.textContent = 'Connection Failed';
+                configInfo.textContent = `Error: ${error.message}`;
+            }
+        }
+
+        // Fungsi untuk menampilkan alert
+        function showAlert(message, type = 'error') {
+            const alertDiv = document.getElementById('loginAlert');
+            alertDiv.innerHTML = `<div class="alert alert-${type}">${message}</div>`;
+            
+            // Auto hide after 5 seconds
+            setTimeout(() => {
+                alertDiv.innerHTML = '';
+            }, 5000);
+        }
+
+        // Fungsi login
+        async function handleLogin(event) {
+            event.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const role = document.getElementById('role').value;
+            const loginBtn = document.getElementById('loginBtn');
+            const loginBtnText = document.getElementById('loginBtnText');
+            
+            // Validasi input
+            if (!username || !password || !role) {
+                showAlert('Semua field harus diisi!');
+                return;
+            }
+            
+            // Set loading state
+            loginBtn.disabled = true;
+            loginBtnText.innerHTML = '<span class="loading"></span>Memproses...';
+            
+            debugLog(`Login attempt: ${username} as ${role}`);
+            
+            try {
+                const formData = new FormData();
+                formData.append('action', 'login');
+                formData.append('username', username);
+                formData.append('password', password);
+                formData.append('role', role);
+                
+                const response = await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                debugLog(`Login response status: ${response.status}`);
+                
+                const data = await response.json();
+                debugLog(`Login response: ${JSON.stringify(data)}`);
+                
+                if (data.success) {
+                    currentUser = data.user;
+                    showAlert('Login berhasil! Mengalihkan...', 'success');
+                    
+                    // Simpan session
+                    sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+                    
+                    // Redirect berdasarkan role
+                    setTimeout(() => {
+                        if (role === 'admin') {
+                            // Untuk admin, redirect ke index.html (halaman utama)
+                            window.location.href = 'index.html';
+                        } else {
+                            // Untuk role lain, redirect ke halaman masing-masing
+                            const targetPage = ROLE_PAGES[role];
+                            if (targetPage) {
+                                window.location.href = targetPage;
+                            } else {
+                                window.location.href = 'index.html';
+                            }
+                        }
+                    }, 1500);
+                    
+                } else {
+                    showAlert(data.message || 'Login gagal!');
+                }
+                
+            } catch (error) {
+                debugLog(`Login error: ${error.message}`);
+                showAlert('Terjadi kesalahan saat login. Silakan coba lagi.');
+            } finally {
+                // Reset button state
+                loginBtn.disabled = false;
+                loginBtnText.textContent = 'Masuk';
+            }
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Cek koneksi database saat halaman dimuat
+            checkDatabaseConnection();
+            
+            // Set up login form
+            document.getElementById('loginForm').addEventListener('submit', handleLogin);
+            
+            // Auto-fill untuk testing (opsional - hapus di production)
+            const params = new URLSearchParams(window.location.search);
+            if (params.get('test') === '1') {
+                document.getElementById('username').value = 'admin';
+                document.getElementById('password').value = 'admin123';
+                document.getElementById('role').value = 'admin';
+            }
+            
+            debugLog('Login page loaded successfully');
+        });
+
+        // Cek jika user sudah login
+        window.addEventListener('load', function() {
+            const savedUser = sessionStorage.getItem('currentUser');
+            if (savedUser) {
+                try {
+                    currentUser = JSON.parse(savedUser);
+                    debugLog(`Found saved session for: ${currentUser.username}`);
+                    
+                    // Redirect jika sudah login
+                    const targetPage = ROLE_PAGES[currentUser.role] || 'index.html';
+                    window.location.href = targetPage;
+                } catch (error) {
+                    debugLog(`Error parsing saved session: ${error.message}`);
+                    sessionStorage.removeItem('currentUser');
+                }
+            }
+        });
+    </script>
+</body>
+</html>
